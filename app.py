@@ -3,19 +3,30 @@ import geocoder
 import geopy
 from geopy.geocoders import Nominatim
 from datetime import datetime
+from flask import request
+from flask import jsonify
 
 app = Flask(__name__)
+
+@app.route("/get_my_ip", methods=["GET"])
+def get_my_ip():
+    #print(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+    return {'ip': request.remote_addr}, 200
 
 
 @app.route('/get_location')
 def get_location():
-    g = geocoder.ip('me')
+    ip,_ = get_my_ip()
+    #print(ip["ip"])
+    g = geocoder.ip(ip["ip"])
     lat_long=g.latlng
     coord=', '.join(list(map(str,lat_long)))
     geolocator = Nominatim(user_agent="test_project")
     location = geolocator.reverse(coord)
 
     return location.address
+
+
 
 @app.route('/get_shops')
 def get_shops():
