@@ -18,13 +18,16 @@ def get_my_ip():
 def get_location():
     ip,_ = get_my_ip()
     #print(ip["ip"])
-    g = geocoder.ip(ip["ip"])
-    lat_long=g.latlng
-    coord=', '.join(list(map(str,lat_long)))
-    geolocator = Nominatim(user_agent="test_project")
-    location = geolocator.reverse(coord)
+    try:
+        g = geocoder.ip(ip["ip"])
+        lat_long=g.latlng
+        coord=', '.join(list(map(str,lat_long)))
+        geolocator = Nominatim(user_agent="test_project")
+        location = geolocator.reverse(coord)
 
-    return location.address
+        return location.address
+    except:
+        return "Sorry..! Could not determine location"
 
 
 
