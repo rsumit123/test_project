@@ -10,8 +10,9 @@ app = Flask(__name__)
 
 @app.route("/get_my_ip", methods=["GET"])
 def get_my_ip():
-    print(request.environ['REMOTE_ADDR'])
-    return {'ip': request.environ['REMOTE_ADDR']}, 200
+    #print(request.environ['REMOTE_ADDR'])
+    #request.remote_addr
+    return {'ip': request.remote_addr}, 200
 
 
 @app.route('/get_location')
