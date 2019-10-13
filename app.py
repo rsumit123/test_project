@@ -26,19 +26,20 @@ def get_location():
         geolocator = Nominatim(user_agent="test_project")
         location = geolocator.reverse(coord)
 
-        return location.address
+        return location.address ,ip["ip"]
     except:
-        return "Sorry..! Could not determine location"
+        return "Sorry..! Could not determine location" ,ip["ip"]
 
 
 
 @app.route('/get_shops')
 def get_shops():
     return_data = dict()
-    curr_address = get_location()
+    curr_address,ip = get_location()
     return_data["location"] = curr_address
     return_data["store_name"] = ["Dummy_Shop1","Dummy_shop2","Dummy_shop3","Dummy_shop4","Dummy_shop5"]
     return_data["date_time"]=str(datetime.now())
+    return_data["ip address"] = ip
     return return_data
 
 
